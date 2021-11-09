@@ -3,8 +3,8 @@
 
 
 @section('content')
-<div class="container d-flex justify-content-center">
-    <div class="card mt-5 text-center" >
+<div class="container d-flex mt-5">
+    <div class="card text-center" >
         <div class="card-body">
           <h5 class="card-title">File submit axios</h5>
           <div class="form">
@@ -16,20 +16,65 @@
         </div>
       </div>
 
+
+      <table class="table w-75 p-5 mx-5">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+    </tr>
+
+<tbody class="tableData">
+
+</tbody>
+      </table>
+
 </div>
     
 @endsection
 
 @section('script')
 <script>
+
+function getFileList(){
+  axios.get('/select')
+  .then(function (response) {
+   var jsondata=response.data;
+$.each(jsondata,function(i){
+  $('<tr>').html("<td>"
+  +jsondata[i].id+
+  "</td>"+"<td><a href='/download/"+jsondata[i].path+"' class='btn btn-success'>Download</a></td>").appendTo('.tableData');
+})
+
+
+
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+// axios.get('/select').then(function(response){
+//   var jsondata=response.data;
+//   console.log(jsondata);
+//   $.each(jsondata,function(i){
+//     $('<tr>').html(
+//       "<td>"+jsondata[i].id+"</td>"+"<td><button data-id="+jsondata[i].path+"class=btn dowloadBtn btn-primary">Download</button>
+//     ).appendTo('.tableData');
+//   })
+// });
+
+
+}
+getFileList();
+
+
    function onSubmit(){
       let file=document.getElementById('fileInput').files[0];
       let fileName=file.name;
      let fileSize=file.size;
     let fileType=fileName.split('.').pop();
-
-
-    
 
 let fileData=new FormData();
 fileData.append('fileKey',file);

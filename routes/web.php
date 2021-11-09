@@ -16,3 +16,6 @@ Route::get('/',function(){
     return view('HompPage');
 });
 Route::post('/fileUp','uploadController@fileUpload');
+
+Route::get('/download/{folderPath}/{name}','downlodController@onDownload');
+Route::get('/select','uploadController@onSelect');

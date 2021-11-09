@@ -36,7 +36,12 @@ fileData.append('fileKey',file);
 let config={headers:{'content-type':'multipart/form-data'},
 onUploadProgress:function(progressEvent){
   let UploadPercentage=Math.round((progressEvent.loaded*100)/progressEvent.total)
-  $('#uploadPercentageId').html(UploadPercentage+'%')
+let uploaded=(progressEvent.loaded)/(1028*1028);
+let total=(progressEvent.total)/(1028*1028);
+let due=total-uploaded;
+$('#uploadPercentageId').html('Total uploaded: '+uploaded.toFixed(2)+'MB'+' Total: '+total.toFixed(2)+'MB'+' Due :'+due.toFixed(2)+'MB');
+
+  // $('#uploadPercentageId').html(UploadPercentage+'%')
 }
 }
 let url='/fileUp';
